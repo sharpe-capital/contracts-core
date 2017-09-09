@@ -4,13 +4,13 @@ The core smart contracts for the Sharpe Capital platform are contained within th
 - TradeLedger.sol - trustless trading ledger service
 - SentimentAnalysis.sol - immutable record of reputation scores for sentiment providers
 
-## Project Contributions
+### Project Contributions
 
 Please feel free to use the source code in this repository as inspiration for your own Solidity applications.
 
 We're also happy to receive issues/PRs/bug reports. Please add tests for any changes.
 
-#### Installing Dependencies
+### Installing Dependencies
 
 You need to install the Solidity and NPM dependencies to start this project:
 
@@ -18,7 +18,7 @@ You need to install the Solidity and NPM dependencies to start this project:
 
 `npm install`
 
-#### Running the Tests
+### Running the Tests
 
 Our tests are implemented using Truffle's JS testing Framework. You can run the tests with the following commands:
 
