@@ -1,0 +1,38 @@
+{
+    "name": "sharpe-core-contracts",
+    "version": "0.1.0",
+    "description": "Sharpe capital smart contracts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sharpe-capital/contracts-core.git"
+    },
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/sharpe-capital/contracts-core/issues"
+    },
+    "homepage": "https://github.com/sharpe-capital/contracts-core",
+    "devDependencies": {
+        "async": "^2.5.0",
+        "bignumber.js": "^4.0.2",
+        "ethereumjs-testrpc": "^3.0.5",
+        "random-bytes": "^1.0.0",
+        "solc": "^0.4.15",
+        "solidity-coverage": "^0.1.10",
+        "truffle": "3.2.4",
+        "web3": "^0.19.1"
+    },
+    "dependencies": {
+        "jsonfile": "^3.0.1"
+    },
+    "main": "truffle.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "pretest": "testrpc -a 10 > /dev/null 2>&1 &",
+        "posttest": "killall -9 node",
+        "test": "truffle test",
+        "lint": "solium --dir contracts",
+        "coverage": "./node_modules/.bin/solidity-coverage"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "package_name": "sharpe-core-contracts",
+  "version": "0.0.1",
+  "description": "Sharpe Capital smart contracts",
+  "authors": [
+    "Lewis Barber <lewis.barber@sharpe.capital>"
+  ],
+  "license": "MIT"
+}
