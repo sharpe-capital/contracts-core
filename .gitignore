@@ -6,3 +6,4 @@ coverage
 coverageEnv
 .node*
 .DS_Store
+wrapper/
