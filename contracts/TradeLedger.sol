@@ -149,6 +149,7 @@ contract TradeLedger is Owned {
     string accountId
   ) 
     accountPresent(accountId) // Only allow for valid account IDs
+    constant
     returns (uint256) 
   {
     return accountPositions[accountId].length;
@@ -161,6 +162,7 @@ contract TradeLedger is Owned {
     string accountId
   ) 
     accountPresent(accountId) // Only allow for valid account IDs
+    constant
     returns (uint256) 
   {
     return accountEquityPoints[accountId].length;
@@ -310,19 +312,19 @@ contract TradeLedger is Owned {
 
   /// @dev Counts all positions
   /// @return Returns the number of positions
-  function countPositions() returns (uint256) {
+  function countPositions() constant returns (uint256) {
     return positionIds.length;
   }
 
   /// @dev Counts all accounts
   /// @return Returns the number of accounts
-  function countAccounts() returns (uint256) {
+  function countAccounts() constant returns (uint256) {
     return accountIds.length;
   }
 
   /// @dev Counts all equity points
   /// @return Returns the number of equity points
-  function countEquityPoints() returns (uint256) {
+  function countEquityPoints() constant returns (uint256) {
     return equityPointIds.length;
   }
 
@@ -333,6 +335,7 @@ contract TradeLedger is Owned {
     string id
   ) 
     accountPresent(id)  // Only valid accounts can be retreived
+    constant
     returns (string, int256, int256, int256, int256) 
   {
     Account account = accounts[id];
@@ -359,6 +362,7 @@ contract TradeLedger is Owned {
   function getAccountByIndex(
     uint256 idx
   )
+    constant
     returns (string, int256, int256, int256, int256) 
   {
     string accid = accountIds[idx];
@@ -374,6 +378,7 @@ contract TradeLedger is Owned {
     string accountId, 
     uint256 idx
   ) 
+    constant
     accountPresent(accountId) // Only valid accounts can be provided
     returns (string, uint256, string, int256, string, string, string) 
   {
@@ -390,6 +395,7 @@ contract TradeLedger is Owned {
     string accountId, 
     uint256 idx
   ) 
+    constant
     accountPresent(accountId) // Only valid accounts can be provided
     returns (string, int256, int256, int256, int256)
   {
@@ -406,6 +412,7 @@ contract TradeLedger is Owned {
     string accountId, 
     uint256 idx
   ) 
+    constant
     accountPresent(accountId) // Only valid accounts can be provided
     returns (string, string) 
   {
@@ -420,6 +427,7 @@ contract TradeLedger is Owned {
   function getPosition(
     string id
   ) 
+    constant
     positionPresent(id) // Only valid positions can be provided
     returns (string, uint256, string, int256, string, string, string) 
   {
@@ -441,6 +449,7 @@ contract TradeLedger is Owned {
   function getEquityPoint(
     uint256 id
   ) 
+    constant
     equityPointPresent(id)  // Only valid equity points can be provided
     returns (string, int256, int256, int256, int256) 
   {
@@ -460,6 +469,7 @@ contract TradeLedger is Owned {
   function getPositionKeys(
     string id
   ) 
+    constant
     positionPresent(id) // Only valid positions can be provided
     returns (string, string) 
   {
@@ -481,6 +491,7 @@ contract TradeLedger is Owned {
     string accountId, 
     uint256 idx
   ) 
+    constant
     accountPresent(accountId) // Only valid accounts can be provided
     internal
     returns (int256) 
