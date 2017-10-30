@@ -397,7 +397,7 @@ contract TradeLedger is Owned {
   ) 
     constant
     accountPresent(accountId) // Only valid accounts can be provided
-    returns (string, int256, int256, int256, int256)
+    returns (uint256, string, int256, int256, int256, int256, string)
   {
     uint256 epid = accountEquityPoints[accountId][idx];
     require(epid > 0);
@@ -451,15 +451,17 @@ contract TradeLedger is Owned {
   ) 
     constant
     equityPointPresent(id)  // Only valid equity points can be provided
-    returns (string, int256, int256, int256, int256) 
+    returns (uint256, string, int256, int256, int256, int256, string) 
   {
     EquityPoint equityPoint = equityPoints[id];
     return (
-      equityPoint.date, 
+      equityPoint.id,
+      equityPoint.date,
       equityPoint.balance,
       equityPoint.equity,
       equityPoint.leverage,
-      equityPoint.profitLoss
+      equityPoint.profitLoss,
+      equityPoint.accountId
     );
   }
 
