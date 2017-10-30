@@ -297,11 +297,13 @@ contract("TradeLedger", function(accounts) {
 
     it('should fetch equity point by ID', async function() {
         const result = await tradeLedger.getEquityPoint.call(1);
-        assert.equal(result[0], '2017-02-01T11:00:00');
-        assert.equal(result[1].toNumber(), 10000);
+        assert.equal(result[0].toNumber(), 1);
+        assert.equal(result[1], '2017-02-01T11:00:00');
         assert.equal(result[2].toNumber(), 10000);
-        assert.equal(result[3].toNumber(), 200);
-        assert.equal(result[4].toNumber(), 0);
+        assert.equal(result[3].toNumber(), 10000);
+        assert.equal(result[4].toNumber(), 200);
+        assert.equal(result[5].toNumber(), 0);
+        assert.equal(result[6], "12345");
     });
     
     it('should fetch all equity points for account', async function() {
