@@ -19,6 +19,8 @@ contract TradeLedger is Owned {
   mapping (uint256 => EquityPoint) private equityPoints;      // Map of equity points, keyed by ID
   mapping (string => address) private accountOwners;          // Map of owners, keyed by account ID
   mapping (string => address) private positionOwners;         // Map of owners, keyed by position ID 
+  
+  event NewEquityPoint(uint256 id, string accountId, string currentDateTime, int256 balance, int256 equity, int256 leverage, int256 profitLoss);
 
   /// @notice Rejects Ether payments and returns the funds to the sender
   function () payable {
@@ -271,6 +273,7 @@ contract TradeLedger is Owned {
         leverage, profitLoss, accountId, true);
       equityPointIds.push(id);
       accountEquityPoints[accountId].push(id);
+      NewEquityPoint(id, accountId, currentDateTime, balance, equity, leverage, profitLoss);
     }
   }
 
@@ -293,7 +296,6 @@ contract TradeLedger is Owned {
     accountPresent(accountId) // Only valid accounts can store positions
     positionNotPresent(id)    // Stops duplicate position IDs
   {
-
     require(bytes(openPrice).length > 0 && bytes(ticker).length > 0 && bytes(accountId).length > 0);
     require(bytes(openDate).length > 0 && bytes(id).length > 0);
     require(bytes(size).length > 0 && exposure > 0);
