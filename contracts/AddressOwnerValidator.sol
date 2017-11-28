@@ -16,18 +16,14 @@ contract AddressOwnerValidator {
 
   function ()  payable {
     require(msg.value > 0);
-    if (transfers[msg.sender] == 0) {
-      uint256 usedGas = gas.sub(msg.gas);
-      uint256 toRefund = usedGas.add(msg.value);
-      
-      transfers[msg.sender] = msg.value;
-      
-      msg.sender.transfer(toRefund);
-      
-      RefundTransfer(now, msg.value, usedGas, toRefund, msg.sender);
-    } else {
-      // address has already been verified
-      revert();
-    }
+    
+    uint256 usedGas = gas.sub(msg.gas);
+    uint256 toRefund = usedGas.add(msg.value);
+    
+    transfers[msg.sender] = msg.value;
+    
+    msg.sender.transfer(toRefund);
+    
+    RefundTransfer(now, msg.value, usedGas, toRefund, msg.sender);
   }
 }
