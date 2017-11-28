@@ -10,11 +10,6 @@ contract AddressOwnerValidator {
   
   event RefundTransfer(uint256 date, uint256 paid, uint256 usedGas, uint256 refunded, address user);
   
-  struct Transfer {
-    uint256 date;
-    uint256 amount;
-  }
-
   function AddressOwnerValidator(uint256 _gas) payable {
     gas = _gas;
   }
