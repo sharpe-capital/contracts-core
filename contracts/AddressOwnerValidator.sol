@@ -5,8 +5,8 @@ import "./lib/SafeMath.sol";
 contract AddressOwnerValidator {
   using SafeMath for uint256;
   
-  uint256 private gas;
-  mapping (address => Transfer) private transfers;
+  uint256 public gas;
+  mapping (address => uint256) public transfers;
   
   event RefundTransfer(uint256 date, uint256 paid, uint256 usedGas, uint256 refunded, address user);
   
@@ -20,11 +20,12 @@ contract AddressOwnerValidator {
   }
 
   function ()  payable {
-    if (transfers[msg.sender].date == 0) {
+    require(msg.value > 0);
+    if (transfers[msg.sender] == 0) {
       uint256 usedGas = gas.sub(msg.gas);
       uint256 toRefund = usedGas.add(msg.value);
       
-      transfers[msg.sender] = Transfer(now, msg.value);
+      transfers[msg.sender] = msg.value;
       
       msg.sender.transfer(toRefund);
       
@@ -33,9 +34,5 @@ contract AddressOwnerValidator {
       // address has already been verified
       revert();
     }
-  }
-
-  function validateUser(address user)  public constant returns (uint256, uint256) {
-    return (transfers[user].date, transfers[user].amount);
   }
 }

@@ -54,10 +54,41 @@ contract("AddressOwnerValidator", function(accounts) {
         let accountEth = await web3.eth.getBalance(accounts[1]).toNumber();
         console.log("accountEth " + accountEth);
 
-        const result = await addressOwnerValidator.validateUser.call(accounts[1]);
+        const result = await addressOwnerValidator.transfers.call(accounts[1]);
         console.log("result " + result);
+        assert.equal(result.toNumber(), transactionValue);
+    });
 
-        assert.equal(result[0].toNumber(), dateVerified);
-        assert.equal(result[1].toNumber(), paid);
+
+    it('should reject subsequent transactions for a given user', async function() {
+        let transactionValue = web3.toWei(1);
+        await addressOwnerValidator.sendTransaction({
+            value: transactionValue, 
+            gas: GAS, 
+            gasPrice: GAS_PRICE, 
+            from: accounts[2]
+        });
+
+        await assertFail(async function() {
+            await addressOwnerValidator.sendTransaction({
+                value: transactionValue, 
+                gas: GAS, 
+                gasPrice: GAS_PRICE, 
+                from: accounts[2]
+            })
+        });
+    });
+
+    it('should not accept 0 ETH transactions', async function() {
+        let transactionValue = web3.toWei(0);
+
+        await assertFail(async function() {
+            await addressOwnerValidator.sendTransaction({
+                value: transactionValue, 
+                gas: GAS, 
+                gasPrice: GAS_PRICE, 
+                from: accounts[3]
+            })
+        });
     });
 });
