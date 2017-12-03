@@ -13,10 +13,17 @@ module.exports = {
         },
         testnet: {
             network_id: 3,
-            host: "52.210.215.150",
+            host: "34.240.84.166",
             port: 8545,
-            gas: 6000000,
+            gas: 4000000,
             gasPrice: 20e9,
-        }
+        },
+        mainnet: {
+            network_id: 1,
+            host: "34.251.44.7",
+            port: 8545,
+            gas: 4000000,
+            gasPrice: 20e9,
+        },
     }
 };
