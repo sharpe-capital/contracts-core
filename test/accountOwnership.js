@@ -12,7 +12,7 @@ contract("AccountOwnership", function(accounts) {
     accounts.forEach(acc => console.log(acc + " -> " + web3.fromWei(web3.eth.getBalance(acc), "ether").toNumber() + " ETH"));
 
     before(async function() {
-        accountOwnership = await AccountOwnership.new(GAS, {value:  web3.toWei(10)});
+        accountOwnership = await AccountOwnership.new({value:  web3.toWei(10)});
     });
 
     after(async function() {
