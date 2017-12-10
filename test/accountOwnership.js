@@ -68,7 +68,32 @@ contract("AccountOwnership", function(accounts) {
                 gas: GAS, 
                 gasPrice: GAS_PRICE, 
                 from: accounts[3]
-            })
+            });
         });
+    });
+
+    it('should set deposit ETH address', async function() {
+        await accountOwnership.setDepositAddress(accounts[2]);
+        let depositAddress = await accountOwnership.depositAddress();
+        assert.equal(depositAddress, accounts[2]);
+    });
+
+    it('should deposit ETH without a refund from deposit address', async function() {
+        let transactionValue = web3.toWei(1);
+        let accountEthBefore = await web3.eth.getBalance(accountOwnership.address).toNumber();
+        await accountOwnership.sendTransaction({
+            value: transactionValue, 
+            gas: GAS, 
+            gasPrice: GAS_PRICE, 
+            from: accounts[2]
+        });
+        let accountEth = await web3.eth.getBalance(accountOwnership.address).toNumber();
+        assert.equal(accountEth, (Number(accountEthBefore) + Number(transactionValue)));
+    });
+
+    it('should allow owner to withdraw ETH', async function() {
+        await accountOwnership.withdrawEther(accounts[1]);
+        let accountEth = await web3.eth.getBalance(accountOwnership.address).toNumber();
+        assert.equal(accountEth, 0); 
     });
 });
