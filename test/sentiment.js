@@ -43,11 +43,13 @@ contract("SentimentAnalysis", function(accounts) {
             }
         )
         .then(function(result) {
-            assert.equal(result[0], ""); // reputation
-            assert.equal(result[1], 0); // correct
-            assert.equal(result[2], 0); // incorrect
-            assert.equal(result[3], ""); // lastUpdatedDate
-            assert.equal(result[4], ""); // lastFormulaApplied
+            assert.equal(result[0], ""); // nonLinearReputation
+            assert.equal(result[1], ""); // linearReputation
+            assert.equal(result[2], 0); // correct
+            assert.equal(result[3], 0); // incorrect
+            assert.equal(result[4], ""); // lastUpdatedDate
+            assert.equal(result[5], ""); // nonLinearReputationFormula
+            assert.equal(result[6], ""); // linearReputationFormula
         });
     });
 
@@ -64,7 +66,7 @@ contract("SentimentAnalysis", function(accounts) {
 
     it('should be able to update reputations if owner', async function() {
         await sentimentAnalysis.updateReputation(
-            "0.525", 1, 0, todayISO, "0.5 + (0.5*0.05)", accounts[1],
+            "0.525", "0.51", 1, 0, todayISO, "0.5 + (0.5*0.05)", "0.5 + 0.01", accounts[1],
             {
                 from: ownerAddress
             }
@@ -75,11 +77,13 @@ contract("SentimentAnalysis", function(accounts) {
                 {
                     name: "ReputationUpdated",
                     args: {
-                        reputation: "0.525",
+                        nonLinearReputation: "0.525",
+                        linearReputation: "0.51",
                         correct: 1,
                         incorrect: 0,
                         lastUpdateDate: todayISO,
-                        lastFormulaApplied: "0.5 + (0.5*0.05)",
+                        nonLinearReputationFormula: "0.5 + (0.5*0.05)",
+                        linearReputationFormula: "0.5 + 0.01",
                         user: accounts[1]
                     }
                 }
@@ -94,11 +98,13 @@ contract("SentimentAnalysis", function(accounts) {
             }
         )
         .then(result => {
-            assert.equal(result[0], "0.525"); // reputation
-            assert.equal(result[1], 1); // correct
-            assert.equal(result[2], 0); // incorrect
-            assert.equal(result[3], todayISO); // lastUpdatedDate
-            assert.equal(result[4], "0.5 + (0.5*0.05)"); // lastFormulaApplied
+            assert.equal(result[0], "0.525"); // nonLinearReputation
+            assert.equal(result[1], "0.51"); // linearReputation
+            assert.equal(result[2], 1); // correct
+            assert.equal(result[3], 0); // incorrect
+            assert.equal(result[4], todayISO); // lastUpdatedDate
+            assert.equal(result[5], "0.5 + (0.5*0.05)"); // nonLinearReputationFormula
+            assert.equal(result[6], "0.5 + 0.01"); // linearReputationFormula
         });
     });
 
@@ -109,17 +115,19 @@ contract("SentimentAnalysis", function(accounts) {
             }
         )
         .then(result => {
-            assert.equal(result[0], "0.525"); // reputation
-            assert.equal(result[1], 1); // correct
-            assert.equal(result[2], 0); // incorrect
-            assert.equal(result[3], todayISO); // lastUpdatedDate
-            assert.equal(result[4], "0.5 + (0.5*0.05)"); // lastFormulaApplied
+            assert.equal(result[0], "0.525"); // nonLinearReputation
+            assert.equal(result[1], "0.51"); // linearReputation
+            assert.equal(result[2], 1); // correct
+            assert.equal(result[3], 0); // incorrect
+            assert.equal(result[4], todayISO); // lastUpdatedDate
+            assert.equal(result[5], "0.5 + (0.5*0.05)"); // nonLinearReputationFormula
+            assert.equal(result[6], "0.5 + 0.01"); // linearReputationFormula
         });
     });
 
     it('should be able to update existing reputations again if owner', async function() {
         await sentimentAnalysis.updateReputation(
-            "0.55125", 2, 0, todayISO, "0.525 + (0.525*0.05)", accounts[1],
+            "0.55125", "0.52", 2, 0, todayISO, "0.525 + (0.525*0.05)", "0.51 + 0.01", accounts[1],
             {
                 from: ownerAddress
             }
@@ -130,11 +138,13 @@ contract("SentimentAnalysis", function(accounts) {
                 {
                     name: "ReputationUpdated",
                     args: {
-                        reputation: "0.55125",
+                        nonLinearReputation: "0.55125",
+                        linearReputation: "0.52",
                         correct: 2,
                         incorrect: 0,
                         lastUpdateDate: todayISO,
-                        lastFormulaApplied: "0.525 + (0.525*0.05)",
+                        nonLinearReputationFormula: "0.525 + (0.525*0.05)",
+                        linearReputationFormula: "0.51 + 0.01",
                         user: accounts[1]
                     }
                 }
@@ -149,11 +159,13 @@ contract("SentimentAnalysis", function(accounts) {
             }
         )
         .then(result => {
-            assert.equal(result[0], "0.55125"); // reputation
-            assert.equal(result[1], 2); // correct
-            assert.equal(result[2], 0); // incorrect
-            assert.equal(result[3], todayISO); // lastUpdatedDate
-            assert.equal(result[4], "0.525 + (0.525*0.05)"); // lastFormulaApplied
+            assert.equal(result[0], "0.55125"); // nonLinearReputation
+            assert.equal(result[1], "0.52"); // linearReputation
+            assert.equal(result[2], 2); // correct
+            assert.equal(result[3], 0); // incorrect
+            assert.equal(result[4], todayISO); // lastUpdatedDate
+            assert.equal(result[5], "0.525 + (0.525*0.05)"); // nonLinearReputationFormula
+            assert.equal(result[6], "0.51 + 0.01"); // linearReputationFormula
         });
     });
 });
