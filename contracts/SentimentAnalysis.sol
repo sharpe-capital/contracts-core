@@ -8,14 +8,25 @@ contract SentimentAnalysis is Owned {
   
   mapping (address => Reputation) reputations;
   
-  event ReputationUpdated(string reputation, uint correct, uint incorrect, string lastUpdateDate, string lastFormulaApplied, address user);
+  event ReputationUpdated(
+    string nonLinearReputation,
+    string linearReputation, 
+    uint correct, 
+    uint incorrect, 
+    string lastUpdateDate, 
+    string nonLinearReputationFormula, 
+    string linearReputationFormula, 
+    address user
+  );
   
   struct Reputation {
-    string reputation;
+    string nonLinearReputation;
+    string linearReputation;
     uint correct;
     uint incorrect;
     string lastUpdateDate;
-    string lastFormulaApplied;
+    string nonLinearReputationFormula;
+    string linearReputationFormula;
   }
 
   function ()  payable {
@@ -29,34 +40,40 @@ contract SentimentAnalysis is Owned {
   ) 
     public
     constant
-    returns (string, uint, uint, string, string)
+    returns (string, string, uint, uint, string, string, string)
   {
-    return (reputations[user].reputation, reputations[user].correct, reputations[user].incorrect, reputations[user].lastUpdateDate, reputations[user].lastFormulaApplied);
+    return (reputations[user].nonLinearReputation, reputations[user].linearReputation, reputations[user].correct, reputations[user].incorrect, reputations[user].lastUpdateDate, reputations[user].nonLinearReputationFormula, reputations[user].linearReputationFormula);
   }
 
   /// @dev Updates the reputation of the provided user
-  /// @param reputation The reputation to update
+  /// @param nonLinearReputation The non-linear reputation to update
+  /// @param linearReputation The linear reputation to update
   /// @param correct The number of correct sentiments provided
   /// @param incorrect The number of incorrect sentiments provided
   /// @param date The date the reputation is updated
-  /// @param formulaApplied The formula applied to generate the provided reputation
+  /// @param nonLinearReputationFormula The non-linear formula applied to generate the provided non-linear reputation
+  /// @param linearReputationFormula The linear formula applied to generate the provided linear reputation
   /// @param user The address of the user whose reputation is updated
   function updateReputation(
-    string reputation,
+    string nonLinearReputation,
+    string linearReputation,
     uint correct,
     uint incorrect,
     string date,
-    string formulaApplied,
+    string nonLinearReputationFormula,
+    string linearReputationFormula,
     address user
   ) 
     onlyOwner
     public
   {
-    reputations[user].reputation = reputation;
+    reputations[user].nonLinearReputation = nonLinearReputation;
+    reputations[user].linearReputation = linearReputation;
     reputations[user].correct = correct;
     reputations[user].incorrect = incorrect;
     reputations[user].lastUpdateDate = date;
-    reputations[user].lastFormulaApplied = formulaApplied;
-    ReputationUpdated(reputations[user].reputation, reputations[user].correct, reputations[user].incorrect, reputations[user].lastUpdateDate, reputations[user].lastFormulaApplied, user);
+    reputations[user].nonLinearReputationFormula = nonLinearReputationFormula;
+    reputations[user].linearReputationFormula = linearReputationFormula;
+    ReputationUpdated(reputations[user].nonLinearReputation, reputations[user].linearReputation, reputations[user].correct, reputations[user].incorrect, reputations[user].lastUpdateDate, reputations[user].nonLinearReputationFormula, reputations[user].linearReputationFormula, user);
   }
 }
